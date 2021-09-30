@@ -1,0 +1,30 @@
+server:
+  port: 7001
+
+# 定义Spring应用名称，它是一个微服务的名称
+spring:
+  application:
+    name:  eureka-server-7001
+
+eureka:
+  # 微服务实例会按照一定频率对Eureka服务器维持心跳
+  instance:
+    hostname: eureka7001.com #eureka服务端实例名称,即指向的主机地址
+    instance-id: eureka-server-7001 #对应的ID名称
+    # 微服务实例续约超时失效秒数，默认值为90秒
+    lease-expiration-duration-in-seconds: 90
+    # 间隔一定时间执行一次续约服务，默认值为30秒
+    lease-renewal-interval-in-seconds: 30
+
+  client:
+
+    register-with-eureka: false #表示不向注册中心注册自己,默认为true
+    fetch-registry: false #false表示自己就是注册中心，负责维护服务实例,默认为true
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/ # 不搭建集群 单机 指向自己
+#      defaultZone: http://eureka7002.com:7002/eureka/,http://eureka7001.com:7001/eureka/ # 搭建集群 集群是指向其他eureka
+  server:
+    # 15分钟低于85%的情况下心跳测试失败会出现警告
+    enable-self-preservation: false # 关闭自我保护机制 保证不可用服务及时清除
+
+    eviction-interval-timer-in-ms: 2000
